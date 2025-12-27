@@ -1,0 +1,43 @@
+name: aegis_q
+description: A quantum-safe messaging app with ML-KEM-1024, Double Ratchet, and Dilithium signatures.
+
+publish_to: "none"
+
+version: 2.0.0+1
+
+environment:
+  sdk: ">=3.4.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Firebase Backend
+  firebase_core: ^3.8.1
+  firebase_auth: ^5.3.4
+  cloud_firestore: ^5.5.2
+  firebase_storage: ^12.3.6
+
+  # Authentication
+  google_sign_in: ^6.2.2
+
+  # Post-Quantum Cryptography (Phase 2)
+
+  # Encryption & Security
+  flutter_secure_storage: ^9.2.2
+  crypto: ^3.0.6
+  encrypt: ^5.0.3
+
+  # UI & Media
+  image_picker: ^1.1.2
+
+  # Original Kyber (if you want to keep Phase 1 compatibility)
+  xkyber_crypto: ^1.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true

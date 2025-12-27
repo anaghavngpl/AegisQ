@@ -1,0 +1,35 @@
+import os
+from cryptography.hazmat.primitives.kdf.hkdf import HKDF
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+
+
+def hkdf(key: bytes, info: bytes):
+    return HKDF(
+        algorithm=hashes.SHA256(),
+        length=64,
+        salt=None,
+        info=info,
+    ).derive(key)
+
+
+class DemoRatchet:
+    def __init__(self, shared_secret: bytes):
+        self.chain = HKDF(
+            algorithm=hashes.SHA256(),
+            length=32,
+            salt=None,
+            info=b"ratchet-chain",
+        ).derive(shared_secret)
+        self.counter = 0
+
+    def next_key(self):
+        self.counter += 1
+        out = HKDF(
+            algorithm=hashes.SHA256(),
+            length=64,
+            salt=None,
+            info=b"ratchet-step",
+        ).derive(self.chain)
+        self.chain = out[:32]
+        return out[32:]
